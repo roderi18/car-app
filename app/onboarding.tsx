@@ -65,7 +65,7 @@ const OnboardingScreen: React.FC<{ onDone?: () => void }> = ({ onDone }) => {
             setCurrentIndex(nextIndex);
             listRef.current?.scrollToOffset({ offset: SIZES.width * nextIndex, animated: true });
         } else {
-            navigation.navigate('welcome');
+            navigation.navigate('login');
         }
     };
 

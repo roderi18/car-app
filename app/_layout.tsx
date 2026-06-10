@@ -55,6 +55,7 @@ export default function RootLayout() {
           <Stack.Screen name="forgotpasswordmethods" />
           <Stack.Screen name="forgotpasswordphonenumber" />
           <Stack.Screen name="login" />
+          <Stack.Screen name="loginemail" />
           <Stack.Screen name="mostpopularproducts" />
           <Stack.Screen name="mywishlist" />
           <Stack.Screen name="onboarding" />
