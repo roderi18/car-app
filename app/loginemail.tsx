@@ -2,12 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExpoCheckbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
 import Header from '../components/Header';
 import Input from '../components/Input';
-import { COLORS, FONT_FAMILY, SIZES, icons, images } from '../constants';
+import { COLORS, FONT_FAMILY, icons } from '../constants';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
@@ -127,15 +127,6 @@ const Login = () => {
             }]}>
                 <Header title="" />
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.logoContainer}>
-                        <Image
-                            source={images.logo}
-                            resizeMode='contain'
-                            style={[styles.logo, {
-                                tintColor: dark ? COLORS.white : COLORS.black
-                            }]}
-                        />
-                    </View>
                     <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>Inicia sesion en tu cuenta</Text>
@@ -196,7 +187,7 @@ const Login = () => {
                         onPress={() => navigate("signup")}>
                         <Text style={[styles.bottomRight, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>{"  "}Regístrate</Text>
+                        }]}>{"  "}Registrate</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -213,16 +204,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
         backgroundColor: COLORS.white
-    },
-    logo: {
-        width: 100,
-        height: 100,
-        tintColor: COLORS.primary
-    },
-    logoContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginVertical: 32
     },
     center: {
         flex: 1,
@@ -281,8 +262,9 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     button: {
+        alignSelf: 'center',
         marginVertical: 6,
-        width: SIZES.width - 32,
+        width: '90%',
         borderRadius: 30
     },
     forgotPasswordBtnText: {

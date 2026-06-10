@@ -293,8 +293,9 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     button: {
+        alignSelf: 'center',
         marginVertical: 6,
-        width: SIZES.width - 32,
+        width: '90%',
         borderRadius: 30
     },
     inlineError: {

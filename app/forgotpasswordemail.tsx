@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
 import Header from '../components/Header';
 import Input from '../components/Input';
-import { COLORS, SIZES, icons, images, FONT_FAMILY } from '../constants';
+import { COLORS, icons, images, FONT_FAMILY } from '../constants';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
@@ -235,8 +235,9 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     button: {
+        alignSelf: 'center',
         marginVertical: 6,
-        width: SIZES.width - 32,
+        width: '90%',
         borderRadius: 30
     },
     forgotPasswordBtnText: {
