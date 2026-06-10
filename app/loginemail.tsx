@@ -156,19 +156,23 @@ const Login = () => {
                                 icon={icons.padlock}
                                 secureTextEntry={true}
                             />
-                            <View style={styles.checkBoxContainer}>
-                                <View style={styles.checkboxRow}>
-                                    <ExpoCheckbox
-                                        style={styles.checkbox}
-                                        value={isChecked}
-                                        color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                        onValueChange={setChecked}
-                                    />
-                                    <Text style={[styles.privacy, {
-                                        color: dark ? COLORS.white : COLORS.black
-                                    }]}>Recordarme</Text>
-                                </View>
-                            </View>
+                        <View style={styles.checkBoxContainer}>
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                onPress={() => setChecked((current) => !current)}
+                                style={styles.checkboxRow}
+                            >
+                                <ExpoCheckbox
+                                    style={styles.checkbox}
+                                    value={isChecked}
+                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
+                                    onValueChange={setChecked}
+                                />
+                                <Text style={[styles.privacy, {
+                                    color: dark ? COLORS.white : COLORS.black
+                                }]}>Recordarme</Text>
+                            </TouchableOpacity>
+                        </View>
                             <ButtonFilled
                                 title="Iniciar sesion"
                                 onPress={loginHandler}
@@ -258,7 +262,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     privacy: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: FONT_FAMILY.regular,
         fontWeight: '400',
         color: COLORS.black,
@@ -280,9 +284,9 @@ const styles = StyleSheet.create({
         color: "black"
     },
     bottomRight: {
-        fontSize: 16,
-        fontFamily: FONT_FAMILY.medium,
-        fontWeight: '500',
+        fontSize: 14,
+        fontFamily: FONT_FAMILY.semiBold,
+        fontWeight: '600',
         color: COLORS.primary
     },
     button: {

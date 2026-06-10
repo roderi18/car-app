@@ -8,7 +8,7 @@ import ButtonFilled from '../components/ButtonFilled';
 import Header from '../components/Header';
 import OrSeparator from '../components/OrSeparator';
 import SocialButton from '../components/SocialButton';
-import { COLORS, SIZES, icons, FONT_FAMILY } from '../constants';
+import { COLORS, icons, FONT_FAMILY } from '../constants';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
@@ -142,19 +142,27 @@ const Signup = () => {
                                 icon={icons.padlock}
                                 secureTextEntry={true}
                             />
-                            <View style={styles.checkBoxContainer}>
-                                <View style={styles.checkboxRow}>
-                                    <ExpoCheckbox
-                                        style={styles.checkbox}
-                                        value={isChecked}
-                                        color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                        onValueChange={setChecked}
-                                    />
-                                    <Text style={[styles.privacy, {
-                                        color: dark ? COLORS.white : COLORS.black
-                                    }]}>Al continuar aceptas nuestra politica de privacidad</Text>
-                                </View>
+                        <View style={styles.checkBoxContainer}>
+                            <View style={styles.checkboxRow}>
+                                <ExpoCheckbox
+                                    style={styles.checkbox}
+                                    value={isChecked}
+                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
+                                    onValueChange={setChecked}
+                                />
+                                <Text style={[styles.privacy, {
+                                    color: dark ? COLORS.white : COLORS.black
+                                }]}>
+                                    Al continuar aceptas nuestra{' '}
+                                    <Text
+                                        onPress={() => navigate("settingsprivacypolicy")}
+                                        style={styles.privacyLink}
+                                    >
+                                        politica de privacidad
+                                    </Text>
+                                </Text>
                             </View>
+                        </View>
                             <ButtonFilled
                                 title="Registrarme"
                                 onPress={signupHandler}
@@ -256,11 +264,18 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     privacy: {
-        fontSize: SIZES.body4,
+        fontSize: 14,
         flex: 1,
         fontFamily: FONT_FAMILY.regular,
         fontWeight: '400',
         color: COLORS.black,
+    },
+    privacyLink: {
+        color: COLORS.primary,
+        fontFamily: FONT_FAMILY.semiBold,
+        fontSize: 14,
+        fontWeight: '600',
+        textDecorationLine: 'underline',
     },
     socialTitle: {
         fontSize: 19.25,
@@ -292,9 +307,9 @@ const styles = StyleSheet.create({
         color: "black"
     },
     bottomRight: {
-        fontSize: 16,
-        fontFamily: FONT_FAMILY.medium,
-        fontWeight: '500',
+        fontSize: 14,
+        fontFamily: FONT_FAMILY.semiBold,
+        fontWeight: '600',
         color: COLORS.primary
     },
     button: {

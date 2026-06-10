@@ -103,7 +103,11 @@ const ForgotPasswordEmail = () => {
                             keyboardType="email-address"
                         />
                         <View style={styles.checkBoxContainer}>
-                            <View style={styles.checkboxRow}>
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                onPress={() => setChecked((current) => !current)}
+                                style={styles.checkboxRow}
+                            >
                                 <ExpoCheckbox
                                     style={styles.checkbox}
                                     value={isChecked}
@@ -113,7 +117,7 @@ const ForgotPasswordEmail = () => {
                                 <Text style={[styles.privacy, {
                                     color: dark ? COLORS.white : COLORS.black
                                 }]}>Recordarme</Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <ButtonFilled
                             title="Restablecer contrasena"
@@ -204,7 +208,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     privacy: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: FONT_FAMILY.regular,
         fontWeight: '400',
         color: COLORS.black,
@@ -239,9 +243,9 @@ const styles = StyleSheet.create({
         color: "black"
     },
     bottomRight: {
-        fontSize: 16,
-        fontFamily: FONT_FAMILY.medium,
-        fontWeight: '500',
+        fontSize: 14,
+        fontFamily: FONT_FAMILY.semiBold,
+        fontWeight: '600',
         color: COLORS.primary
     },
     button: {
