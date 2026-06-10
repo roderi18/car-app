@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import React from 'react';
 import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { COLORS, SIZES, FONT_FAMILY } from '../constants';
+import { COLORS, FONT_FAMILY } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface SocialButtonV2Props {
@@ -45,7 +45,7 @@ const SocialButtonV2: React.FC<SocialButtonV2Props> = ({ title, icon, onPress, i
 
 const styles = StyleSheet.create({
     container: {
-        width: SIZES.width * 0.9,
+        width: '100%',
         height: 54,
         alignItems: 'center',
         justifyContent: "center",

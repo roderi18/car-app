@@ -34,7 +34,7 @@ const Login = () => {
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <Text style={[styles.title, { color: colors.text }]}>Iniciar sesión</Text>
-                <View style={{ marginVertical: 22 }}>
+                <View style={styles.socialButtons}>
                     <SocialButtonV2 title="Continuar con Facebook" icon={icons.facebook} onPress={() => showUnavailableProvider("Facebook")} />
                     <SocialButtonV2 title="Continuar con Google" icon={icons.google} onPress={() => showUnavailableProvider("Google")} />
                     <SocialButtonV2
@@ -115,6 +115,10 @@ const styles = StyleSheet.create({
         fontFamily: FONT_FAMILY.bold,
         fontWeight: '700',
         color: COLORS.primary,
+    },
+    socialButtons: {
+        marginVertical: 22,
+        width: '90%',
     },
     bottomContainer: {
         position: "absolute",
