@@ -1,10 +1,10 @@
 import Button from "@/components/Button";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SocialButtonV2 from "../components/SocialButtonV2";
-import { COLORS, SIZES, icons, illustrations, FONT_FAMILY } from "../constants";
+import { COLORS, FONT_FAMILY, SIZES, icons } from "../constants";
 import { useTheme } from "../theme/ThemeProvider";
 
 type Nav = {
@@ -33,8 +33,7 @@ const Login = () => {
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <Image source={dark ? illustrations.welcomeDark : illustrations.welcome} resizeMode="contain" style={styles.logo} />
-                <Text style={[styles.title, { color: colors.text }]}>Entra a tu cuenta</Text>
+                <Text style={[styles.title, { color: colors.text }]}>Iniciar sesión</Text>
                 <View style={{ marginVertical: 22 }}>
                     <SocialButtonV2 title="Continuar con Facebook" icon={icons.facebook} onPress={() => showUnavailableProvider("Facebook")} />
                     <SocialButtonV2 title="Continuar con Google" icon={icons.google} onPress={() => showUnavailableProvider("Google")} />
@@ -90,12 +89,6 @@ const styles = StyleSheet.create({
         padding: 16,
         alignItems: "center",
         justifyContent: "center",
-    },
-    logo: {
-        width: 237,
-        height: 200,
-        marginBottom: 22,
-        marginTop: -22,
     },
     title: {
         fontSize: 32,
