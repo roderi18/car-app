@@ -1,33 +1,11 @@
-import Input from '@/components/Input';
-import ExpoCheckbox from 'expo-checkbox';
-import { useNavigation } from 'expo-router';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import ButtonFilled from '../components/ButtonFilled';
-import Header from '../components/Header';
-import OrSeparator from '../components/OrSeparator';
-import SocialButton from '../components/SocialButton';
-import { COLORS, icons, FONT_FAMILY } from '../constants';
-import { useAuth } from '../contexts/AuthContext';
-import { useTheme } from '../theme/ThemeProvider';
-import { validateInput } from '../utils/actions/formActions';
-import { getFirebaseAuthErrorMessage } from '../utils/firebaseAuthErrors';
-import { reducer } from '../utils/reducers/formReducers';
-
-const isTestMode = false;
-
-const initialState = {
-    inputValues: {
-        email: isTestMode ? 'example@gmail.com' : '',
-        password: isTestMode ? '**********' : '',
-    },
-    inputValidities: {
-        email: false,
-        password: false
-    },
-    formIsValid: false,
-}
+import Button from "@/components/Button";
+import { useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SocialButtonV2 from "../components/SocialButtonV2";
+import { COLORS, FONT_FAMILY, icons } from "../constants";
+import { useTheme } from "../theme/ThemeProvider";
 
 type Nav = {
     navigate: (value: string) => void
@@ -35,296 +13,136 @@ type Nav = {
 
 const Signup = () => {
     const { navigate } = useNavigation<Nav>();
-    const [formState, dispatchFormState] = useReducer(reducer, initialState);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [isChecked, setChecked] = useState(false);
-    const { signup } = useAuth();
     const { colors, dark } = useTheme();
-
-    const inputChangedHandler = useCallback(
-        (inputId: string, inputValue: string) => {
-            setError(null);
-            const result = validateInput(inputId, inputValue)
-            dispatchFormState({
-                inputId,
-                validationResult: result,
-                inputValue,
-            })
-        },
-        [dispatchFormState]);
+    const [notice, setNotice] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!error) return;
+        if (!notice) return;
 
         const timeout = setTimeout(() => {
-            setError(null);
+            setNotice(null);
         }, 3000);
 
         return () => clearTimeout(timeout);
-    }, [error])
+    }, [notice]);
 
-    const signupHandler = async () => {
-        const email = formState.inputValues.email?.trim();
-        const password = formState.inputValues.password;
-
-        if (!email || !password) {
-            setError('Escribe tu correo y contrasena.');
-            return;
-        }
-
-        if (!isChecked) {
-            setError('Debes aceptar la politica de privacidad para continuar.');
-            return;
-        }
-
-        try {
-            setIsLoading(true);
-            setError(null);
-            await signup({
-                email,
-                password,
-                displayName: email.split('@')[0],
-            });
-            navigate("fillyourprofile");
-        } catch (err) {
-            setError(getFirebaseAuthErrorMessage(err));
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    // implementing apple authentication
-    const appleAuthHandler = () => {
-        console.log("Apple Authentication")
-    };
-
-    // implementing facebook authentication
-    const facebookAuthHandler = () => {
-        console.log("Facebook Authentication")
-    };
-
-    // Implementing google authentication
-    const googleAuthHandler = () => {
-        console.log("Google Authentication")
+    const showUnavailableProvider = (provider: string) => {
+        setNotice(`Registro con ${provider} estara disponible pronto.`);
     };
 
     return (
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <Header title="" />
-                <ScrollView
-                    contentContainerStyle={styles.scrollContent}
-                    keyboardShouldPersistTaps="handled"
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={styles.contentSection}>
-                        <Text style={[styles.title, {
-                            color: dark ? COLORS.white : COLORS.black
-                        }]}>Crea tu cuenta</Text>
-                        <View style={styles.formContent}>
-                            <Input
-                                id="email"
-                                onInputChanged={inputChangedHandler}
-                                errorText={formState.inputValidities['email']}
-                                placeholder="Correo electronico"
-                                placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                                icon={icons.email}
-                                keyboardType="email-address"
-                            />
-                            <Input
-                                onInputChanged={inputChangedHandler}
-                                errorText={formState.inputValidities['password']}
-                                autoCapitalize="none"
-                                id="password"
-                                placeholder="Contrasena"
-                                placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                                icon={icons.padlock}
-                                secureTextEntry={true}
-                            />
-                        <View style={styles.checkBoxContainer}>
-                            <View style={styles.checkboxRow}>
-                                <ExpoCheckbox
-                                    style={styles.checkbox}
-                                    value={isChecked}
-                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                    onValueChange={setChecked}
-                                />
-                                <Text style={[styles.privacy, {
-                                    color: dark ? COLORS.white : COLORS.black
-                                }]}>
-                                    Al continuar aceptas nuestra{' '}
-                                    <Text
-                                        onPress={() => navigate("settingsprivacypolicy")}
-                                        style={styles.privacyLink}
-                                    >
-                                        politica de privacidad
-                                    </Text>
-                                </Text>
-                            </View>
-                        </View>
-                            <ButtonFilled
-                                title="Registrarme"
-                                onPress={signupHandler}
-                                isLoading={isLoading}
-                                style={styles.button}
-                            />
-                        </View>
-                        {error ? (
-                            <Text style={styles.inlineError}>{error}</Text>
-                        ) : null}
-                        <View>
-                            <OrSeparator text="o continua con" />
-                            <View style={styles.socialBtnContainer}>
-                                <SocialButton
-                                    icon={icons.appleLogo}
-                                    onPress={appleAuthHandler}
-                                    tintColor={dark ? COLORS.white : COLORS.black}
-                                />
-                                <SocialButton
-                                    icon={icons.facebook}
-                                    onPress={facebookAuthHandler}
-                                />
-                                <SocialButton
-                                    icon={icons.google}
-                                    onPress={googleAuthHandler}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-                <View style={styles.bottomContainer}>
-                    <Text style={[styles.bottomLeft, {
+                <Text style={[styles.title, { color: colors.text }]}>Crea tu cuenta</Text>
+                <View style={styles.socialButtons}>
+                    <SocialButtonV2 title="Continuar con Facebook" icon={icons.facebook} onPress={() => showUnavailableProvider("Facebook")} />
+                    <SocialButtonV2 title="Continuar con Google" icon={icons.google} onPress={() => showUnavailableProvider("Google")} />
+                    <SocialButtonV2
+                        title="Continuar con Apple"
+                        icon={icons.appleLogo}
+                        onPress={() => showUnavailableProvider("Apple")}
+                        iconStyles={{ tintColor: dark ? COLORS.white : COLORS.black }}
+                    />
+                </View>
+                <View style={styles.lineContainer}>
+                    <View style={[styles.line, { backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200 }]} />
+                    <Text style={[styles.text, { color: dark ? COLORS.white : COLORS.grayscale700 }]}>O</Text>
+                    <View style={[styles.line, { backgroundColor: dark ? COLORS.greyScale800 : COLORS.grayscale200 }]} />
+                </View>
+                <Button
+                    title="Continuar con correo electronico"
+                    onPress={() => navigate("signupemail")}
+                    textColor={dark ? "#101010" : COLORS.white}
+                    style={{
+                        ...styles.primaryButton,
+                        backgroundColor: dark ? COLORS.white : COLORS.primary
+                    }}
+                />
+                {notice ? (
+                    <Text style={styles.notice}>{notice}</Text>
+                ) : null}
+                <View style={styles.bottomRow}>
+                    <Text style={[styles.loginTitle, {
                         color: dark ? COLORS.white : COLORS.black
-                    }]}>Ya tienes una cuenta?</Text>
-                    <TouchableOpacity
-                        onPress={() => navigate("login")}>
-                        <Text style={[styles.bottomRight, {
+                    }]}>Ya tienes una cuenta? </Text>
+                    <TouchableOpacity onPress={() => navigate("login")}>
+                        <Text style={[styles.loginSubtitle, {
                             color: dark ? COLORS.white : COLORS.primary
-                        }]}>{" "}Inicia sesion</Text>
+                        }]}>Inicia sesion</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
     area: {
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
     },
     container: {
         flex: 1,
+        backgroundColor: COLORS.white,
         padding: 16,
-        backgroundColor: COLORS.white
-    },
-    scrollContent: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        paddingBottom: 72,
-    },
-    contentSection: {
-        justifyContent: 'center',
-    },
-    center: {
-        flex: 1,
         alignItems: "center",
         justifyContent: "center",
-    },
-    formContent: {
-        alignSelf: 'center',
-        width: '90%',
     },
     title: {
-        fontSize: 26,
+        fontSize: 32,
         fontFamily: FONT_FAMILY.bold,
-        fontWeight: '700',
+        fontWeight: "700",
         color: COLORS.black,
         textAlign: "center",
-        marginBottom: 22
     },
-    checkBoxContainer: {
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        marginVertical: 18,
-        width: '100%',
+    socialButtons: {
+        marginVertical: 22,
+        width: "90%",
     },
-    checkboxRow: {
-        alignItems: 'flex-start',
-        flexDirection: 'row',
-        width: '100%',
+    lineContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "90%",
     },
-    checkbox: {
-        marginRight: 8,
-        height: 16,
-        width: 16,
-        borderRadius: 4,
-        borderColor: COLORS.primary,
-        borderWidth: 2,
-    },
-    privacy: {
-        fontSize: 14,
+    line: {
         flex: 1,
-        fontFamily: FONT_FAMILY.regular,
-        fontWeight: '400',
-        color: COLORS.black,
+        height: 1,
+        backgroundColor: COLORS.grayscale200,
     },
-    privacyLink: {
-        color: COLORS.primary,
-        fontFamily: FONT_FAMILY.semiBold,
-        fontSize: 14,
-        fontWeight: '600',
-        textDecorationLine: 'underline',
+    text: {
+        marginHorizontal: 10,
+        color: COLORS.grayscale700,
+        fontSize: 18,
+        fontFamily: FONT_FAMILY.semiBold
     },
-    socialTitle: {
-        fontSize: 19.25,
-        fontFamily: FONT_FAMILY.medium,
-        fontWeight: '500',
-        color: COLORS.black,
-        textAlign: "center",
-        marginVertical: 26
+    primaryButton: {
+        marginVertical: 22,
+        width: "90%",
     },
-    socialBtnContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    bottomContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        marginVertical: 18,
-        position: "absolute",
-        bottom: 12,
-        right: 0,
-        left: 0,
-    },
-    bottomLeft: {
-        fontSize: 14,
-        fontFamily: FONT_FAMILY.regular,
-        fontWeight: '400',
-        color: "black"
-    },
-    bottomRight: {
-        fontSize: 14,
-        fontFamily: FONT_FAMILY.semiBold,
-        fontWeight: '600',
-        color: COLORS.primary
-    },
-    button: {
-        marginVertical: 6,
-        width: '100%',
-        borderRadius: 30
-    },
-    inlineError: {
+    notice: {
         color: COLORS.red,
-        fontSize: 13,
         fontFamily: FONT_FAMILY.regular,
-        fontWeight: '400',
-        marginTop: 8,
-        textAlign: "center"
-    }
-})
+        fontSize: 13,
+        fontWeight: "400",
+        marginBottom: 12,
+        marginTop: -8,
+        textAlign: "center",
+    },
+    bottomRow: {
+        flexDirection: "row",
+    },
+    loginTitle: {
+        fontSize: 14,
+        fontFamily: FONT_FAMILY.regular,
+        fontWeight: "400",
+        color: COLORS.black,
+    },
+    loginSubtitle: {
+        fontSize: 14,
+        fontFamily: FONT_FAMILY.bold,
+        fontWeight: "700",
+        color: COLORS.primary,
+    },
+});
 
-export default Signup
+export default Signup;

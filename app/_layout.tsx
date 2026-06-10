@@ -73,6 +73,7 @@ export default function RootLayout() {
           <Stack.Screen name="settingsprivacypolicy" />
           <Stack.Screen name="settingssecurity" />
           <Stack.Screen name="signup" />
+          <Stack.Screen name="signupemail" />
           <Stack.Screen name="topupereceipt" />
           <Stack.Screen name="topupewalletamount" />
           <Stack.Screen name="topupewalletmethods" />
