@@ -2,13 +2,13 @@ import Input from '@/components/Input';
 import ExpoCheckbox from 'expo-checkbox';
 import { useNavigation } from 'expo-router';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ButtonFilled from '../components/ButtonFilled';
 import Header from '../components/Header';
 import OrSeparator from '../components/OrSeparator';
 import SocialButton from '../components/SocialButton';
-import { COLORS, SIZES, icons, images, FONT_FAMILY } from '../constants';
+import { COLORS, SIZES, icons, FONT_FAMILY } from '../constants';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../theme/ThemeProvider';
 import { validateInput } from '../utils/actions/formActions';
@@ -114,58 +114,49 @@ const Signup = () => {
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <Header title="" />
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.logoContainer}>
-                        <Image
-                            source={images.logo}
-                            resizeMode='contain'
-                            style={[styles.logo, {
-                                tintColor: dark ? COLORS.white : COLORS.black
-                            }]}
-                        />
-                    </View>
                     <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>Crea tu cuenta</Text>
-                    <Input
-                        id="email"
-                        onInputChanged={inputChangedHandler}
-                        errorText={formState.inputValidities['email']}
-                        placeholder="Correo electronico"
-                        placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                        icon={icons.email}
-                        keyboardType="email-address"
-                    />
-                    <Input
-                        onInputChanged={inputChangedHandler}
-                        errorText={formState.inputValidities['password']}
-                        autoCapitalize="none"
-                        id="password"
-                        placeholder="Contrasena"
-                        placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                        icon={icons.padlock}
-                        secureTextEntry={true}
-                    />
-                    <View style={styles.checkBoxContainer}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <ExpoCheckbox
-                                style={styles.checkbox}
-                                value={isChecked}
-                                color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                onValueChange={setChecked}
-                            />
-                            <View style={{ flex: 1 }}>
+                    <View style={styles.formContent}>
+                        <Input
+                            id="email"
+                            onInputChanged={inputChangedHandler}
+                            errorText={formState.inputValidities['email']}
+                            placeholder="Correo electronico"
+                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                            icon={icons.email}
+                            keyboardType="email-address"
+                        />
+                        <Input
+                            onInputChanged={inputChangedHandler}
+                            errorText={formState.inputValidities['password']}
+                            autoCapitalize="none"
+                            id="password"
+                            placeholder="Contrasena"
+                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                            icon={icons.padlock}
+                            secureTextEntry={true}
+                        />
+                        <View style={styles.checkBoxContainer}>
+                            <View style={styles.checkboxRow}>
+                                <ExpoCheckbox
+                                    style={styles.checkbox}
+                                    value={isChecked}
+                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
+                                    onValueChange={setChecked}
+                                />
                                 <Text style={[styles.privacy, {
                                     color: dark ? COLORS.white : COLORS.black
                                 }]}>Al continuar aceptas nuestra politica de privacidad</Text>
                             </View>
                         </View>
+                        <ButtonFilled
+                            title="Registrarme"
+                            onPress={signupHandler}
+                            isLoading={isLoading}
+                            style={styles.button}
+                        />
                     </View>
-                    <ButtonFilled
-                        title="Registrarme"
-                        onPress={signupHandler}
-                        isLoading={isLoading}
-                        style={styles.button}
-                    />
                     {error ? (
                         <Text style={styles.inlineError}>{error}</Text>
                     ) : null}
@@ -214,20 +205,14 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: COLORS.white
     },
-    logo: {
-        width: 100,
-        height: 100,
-        tintColor: COLORS.primary
-    },
-    logoContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginVertical: 32
-    },
     center: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+    },
+    formContent: {
+        alignSelf: 'center',
+        width: '90%',
     },
     title: {
         fontSize: 26,
@@ -238,10 +223,15 @@ const styles = StyleSheet.create({
         marginBottom: 22
     },
     checkBoxContainer: {
-        flexDirection: "row",
-        justifyContent: 'space-between',
         alignItems: 'center',
+        justifyContent: 'flex-start',
         marginVertical: 18,
+        width: '100%',
+    },
+    checkboxRow: {
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        width: '100%',
     },
     checkbox: {
         marginRight: 8,
@@ -253,6 +243,7 @@ const styles = StyleSheet.create({
     },
     privacy: {
         fontSize: SIZES.body4,
+        flex: 1,
         fontFamily: FONT_FAMILY.regular,
         fontWeight: '400',
         color: COLORS.black,
@@ -293,9 +284,8 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     button: {
-        alignSelf: 'center',
         marginVertical: 6,
-        width: '90%',
+        width: '100%',
         borderRadius: 30
     },
     inlineError: {

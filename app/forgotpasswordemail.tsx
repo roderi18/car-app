@@ -92,34 +92,36 @@ const ForgotPasswordEmail = () => {
                     <Text style={[styles.title, {
                         color: dark ? COLORS.white : COLORS.black
                     }]}>Ingresa tu correo electronico</Text>
-                    <Input
-                        id="email"
-                        onInputChanged={inputChangedHandler}
-                        errorText={formState.inputValidities['email']}
-                        placeholder="Correo electronico"
-                        placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                        icon={icons.email}
-                        keyboardType="email-address"
-                    />
-                    <View style={styles.checkBoxContainer}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <ExpoCheckbox
-                                style={styles.checkbox}
-                                value={isChecked}
-                                color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                onValueChange={setChecked}
-                            />
+                    <View style={styles.formContent}>
+                        <Input
+                            id="email"
+                            onInputChanged={inputChangedHandler}
+                            errorText={formState.inputValidities['email']}
+                            placeholder="Correo electronico"
+                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                            icon={icons.email}
+                            keyboardType="email-address"
+                        />
+                        <View style={styles.checkBoxContainer}>
+                            <View style={styles.checkboxRow}>
+                                <ExpoCheckbox
+                                    style={styles.checkbox}
+                                    value={isChecked}
+                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
+                                    onValueChange={setChecked}
+                                />
                                 <Text style={[styles.privacy, {
                                     color: dark ? COLORS.white : COLORS.black
                                 }]}>Recordarme</Text>
+                            </View>
                         </View>
+                        <ButtonFilled
+                            title="Restablecer contrasena"
+                            onPress={resetPasswordHandler}
+                            isLoading={isLoading}
+                            style={styles.button}
+                        />
                     </View>
-                    <ButtonFilled
-                        title="Restablecer contrasena"
-                        onPress={resetPasswordHandler}
-                        isLoading={isLoading}
-                        style={styles.button}
-                    />
                     <TouchableOpacity
                         onPress={() => navigate("login")}>
                         <Text style={[styles.forgotPasswordBtnText, {
@@ -170,6 +172,10 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+    formContent: {
+        alignSelf: 'center',
+        width: '90%',
+    },
     title: {
         fontSize: 26,
         fontFamily: FONT_FAMILY.bold,
@@ -179,11 +185,15 @@ const styles = StyleSheet.create({
         marginBottom: 22
     },
     checkBoxContainer: {
-        flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center", // <--- Add this line
+        justifyContent: "flex-start",
         marginVertical: 18,
         width: "100%",
+    },
+    checkboxRow: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: '100%',
     },
     checkbox: {
         marginRight: 8,
@@ -235,9 +245,8 @@ const styles = StyleSheet.create({
         color: COLORS.primary
     },
     button: {
-        alignSelf: 'center',
         marginVertical: 6,
-        width: '90%',
+        width: '100%',
         borderRadius: 30
     },
     forgotPasswordBtnText: {
