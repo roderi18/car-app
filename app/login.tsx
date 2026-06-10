@@ -54,8 +54,7 @@ const Login = () => {
                     onPress={() => navigate("loginemail")}
                     textColor={dark ? "#101010" : COLORS.white}
                     style={{
-                        width: "100%",
-                        marginVertical: 22,
+                        ...styles.primaryButton,
                         backgroundColor: dark ? COLORS.white : COLORS.primary
                     }}
                 />
@@ -142,6 +141,7 @@ const styles = StyleSheet.create({
     lineContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        width: '90%',
     },
     line: {
         flex: 1,
@@ -162,6 +162,10 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         marginTop: -8,
         textAlign: "center",
+    },
+    primaryButton: {
+        marginVertical: 22,
+        width: "90%",
     },
 });
 

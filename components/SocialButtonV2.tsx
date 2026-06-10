@@ -45,7 +45,7 @@ const SocialButtonV2: React.FC<SocialButtonV2Props> = ({ title, icon, onPress, i
 
 const styles = StyleSheet.create({
     container: {
-        width: SIZES.width - 32,
+        width: SIZES.width * 0.9,
         height: 54,
         alignItems: 'center',
         justifyContent: "center",
@@ -58,12 +58,13 @@ const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
         flexDirection: 'row',
-        width: 240,
+        maxWidth: '100%',
+        minWidth: 240,
     } as ViewStyle,
     iconSlot: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: 44,
+        width: 56,
     } as ViewStyle,
     icon: {
         height: 24,
