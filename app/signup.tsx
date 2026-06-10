@@ -113,69 +113,75 @@ const Signup = () => {
         <SafeAreaView style={[styles.area, { backgroundColor: colors.background }]}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <Header title="" />
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text style={[styles.title, {
-                        color: dark ? COLORS.white : COLORS.black
-                    }]}>Crea tu cuenta</Text>
-                    <View style={styles.formContent}>
-                        <Input
-                            id="email"
-                            onInputChanged={inputChangedHandler}
-                            errorText={formState.inputValidities['email']}
-                            placeholder="Correo electronico"
-                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                            icon={icons.email}
-                            keyboardType="email-address"
-                        />
-                        <Input
-                            onInputChanged={inputChangedHandler}
-                            errorText={formState.inputValidities['password']}
-                            autoCapitalize="none"
-                            id="password"
-                            placeholder="Contrasena"
-                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                            icon={icons.padlock}
-                            secureTextEntry={true}
-                        />
-                        <View style={styles.checkBoxContainer}>
-                            <View style={styles.checkboxRow}>
-                                <ExpoCheckbox
-                                    style={styles.checkbox}
-                                    value={isChecked}
-                                    color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
-                                    onValueChange={setChecked}
-                                />
-                                <Text style={[styles.privacy, {
-                                    color: dark ? COLORS.white : COLORS.black
-                                }]}>Al continuar aceptas nuestra politica de privacidad</Text>
+                <ScrollView
+                    contentContainerStyle={styles.scrollContent}
+                    keyboardShouldPersistTaps="handled"
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.contentSection}>
+                        <Text style={[styles.title, {
+                            color: dark ? COLORS.white : COLORS.black
+                        }]}>Crea tu cuenta</Text>
+                        <View style={styles.formContent}>
+                            <Input
+                                id="email"
+                                onInputChanged={inputChangedHandler}
+                                errorText={formState.inputValidities['email']}
+                                placeholder="Correo electronico"
+                                placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                icon={icons.email}
+                                keyboardType="email-address"
+                            />
+                            <Input
+                                onInputChanged={inputChangedHandler}
+                                errorText={formState.inputValidities['password']}
+                                autoCapitalize="none"
+                                id="password"
+                                placeholder="Contrasena"
+                                placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                                icon={icons.padlock}
+                                secureTextEntry={true}
+                            />
+                            <View style={styles.checkBoxContainer}>
+                                <View style={styles.checkboxRow}>
+                                    <ExpoCheckbox
+                                        style={styles.checkbox}
+                                        value={isChecked}
+                                        color={isChecked ? COLORS.primary : dark ? COLORS.white : "gray"}
+                                        onValueChange={setChecked}
+                                    />
+                                    <Text style={[styles.privacy, {
+                                        color: dark ? COLORS.white : COLORS.black
+                                    }]}>Al continuar aceptas nuestra politica de privacidad</Text>
+                                </View>
                             </View>
+                            <ButtonFilled
+                                title="Registrarme"
+                                onPress={signupHandler}
+                                isLoading={isLoading}
+                                style={styles.button}
+                            />
                         </View>
-                        <ButtonFilled
-                            title="Registrarme"
-                            onPress={signupHandler}
-                            isLoading={isLoading}
-                            style={styles.button}
-                        />
-                    </View>
-                    {error ? (
-                        <Text style={styles.inlineError}>{error}</Text>
-                    ) : null}
-                    <View>
-                        <OrSeparator text="o continua con" />
-                        <View style={styles.socialBtnContainer}>
-                            <SocialButton
-                                icon={icons.appleLogo}
-                                onPress={appleAuthHandler}
-                                tintColor={dark ? COLORS.white : COLORS.black}
-                            />
-                            <SocialButton
-                                icon={icons.facebook}
-                                onPress={facebookAuthHandler}
-                            />
-                            <SocialButton
-                                icon={icons.google}
-                                onPress={googleAuthHandler}
-                            />
+                        {error ? (
+                            <Text style={styles.inlineError}>{error}</Text>
+                        ) : null}
+                        <View>
+                            <OrSeparator text="o continua con" />
+                            <View style={styles.socialBtnContainer}>
+                                <SocialButton
+                                    icon={icons.appleLogo}
+                                    onPress={appleAuthHandler}
+                                    tintColor={dark ? COLORS.white : COLORS.black}
+                                />
+                                <SocialButton
+                                    icon={icons.facebook}
+                                    onPress={facebookAuthHandler}
+                                />
+                                <SocialButton
+                                    icon={icons.google}
+                                    onPress={googleAuthHandler}
+                                />
+                            </View>
                         </View>
                     </View>
                 </ScrollView>
@@ -204,6 +210,14 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
         backgroundColor: COLORS.white
+    },
+    scrollContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingBottom: 72,
+    },
+    contentSection: {
+        justifyContent: 'center',
     },
     center: {
         flex: 1,
