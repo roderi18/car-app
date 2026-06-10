@@ -142,20 +142,22 @@ const Login = () => {
                                 errorText={formState.inputValidities['email']}
                                 placeholder="Correo electronico"
                                 placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                                icon={icons.email}
-                                keyboardType="email-address"
-                                value={formState.inputValues.email}
-                            />
+                            icon={icons.email}
+                            keyboardType="email-address"
+                            surface="outlined"
+                            value={formState.inputValues.email}
+                        />
                             <Input
                                 onInputChanged={inputChangedHandler}
                                 errorText={formState.inputValidities['password']}
                                 autoCapitalize="none"
                                 id="password"
-                                placeholder="Contrasena"
-                                placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
-                                icon={icons.padlock}
-                                secureTextEntry={true}
-                            />
+                            placeholder="Contrasena"
+                            placeholderTextColor={dark ? COLORS.grayTie : COLORS.black}
+                            icon={icons.padlock}
+                            surface="outlined"
+                            secureTextEntry={true}
+                        />
                         <View style={styles.checkBoxContainer}>
                             <TouchableOpacity
                                 activeOpacity={0.8}

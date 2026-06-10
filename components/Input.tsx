@@ -10,6 +10,7 @@ interface InputProps extends TextInputProps {
     placeholderTextColor?: string;
     errorText?: string[];
     onInputChanged: (id: string, text: string) => void;
+    surface?: 'soft' | 'outlined';
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -21,6 +22,7 @@ const Input: React.FC<InputProps> = (props) => {
     const isPasswordInput = Boolean(props.secureTextEntry);
     const shouldHidePassword = isPasswordInput && !isPasswordVisible;
     const shouldDisableTextHelp = isEmailInput || isPasswordInput;
+    const isOutlinedSurface = props.surface === 'outlined';
     const iconColor = isFocused
         ? dark ? COLORS.white : COLORS.primary
         : '#BCBCBC';
@@ -46,10 +48,16 @@ const Input: React.FC<InputProps> = (props) => {
                     {
                         borderColor: isFocused
                             ? dark ? COLORS.primary100 : COLORS.primary
-                            : dark ? COLORS.dark2 : COLORS.greyscale500,
+                            : isOutlinedSurface
+                                ? dark ? COLORS.dark2 : COLORS.grayscale200
+                                : dark ? COLORS.dark2 : COLORS.greyscale500,
                         backgroundColor: isFocused
-                            ? COLORS.tansparentPrimary
-                            : dark ? COLORS.dark2 : COLORS.greyscale500,
+                            ? isOutlinedSurface
+                                ? dark ? COLORS.dark2 : COLORS.white
+                                : COLORS.tansparentPrimary
+                            : isOutlinedSurface
+                                ? dark ? COLORS.dark2 : COLORS.white
+                                : dark ? COLORS.dark2 : COLORS.greyscale500,
                     },
                 ]}
             >
