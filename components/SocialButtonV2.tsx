@@ -1,6 +1,6 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { ImageStyle, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { COLORS, SIZES, FONT_FAMILY } from '../constants';
 import { useTheme } from '../theme/ThemeProvider';
 
@@ -24,17 +24,21 @@ const SocialButtonV2: React.FC<SocialButtonV2Props> = ({ title, icon, onPress, i
                     borderColor: dark ? COLORS.dark2 : COLORS.grayscale200,
                 }
             ]}>
-            <Image
-                source={icon}
-                contentFit='contain'
-                style={[styles.icon, iconStyles]}
-            />
-            <Text style={[
-                styles.title,
-                { color: dark ? COLORS.white : COLORS.black }
-            ]}>
-                {title}
-            </Text>
+            <View style={styles.content}>
+                <View style={styles.iconSlot}>
+                    <Image
+                        source={icon}
+                        contentFit='contain'
+                        style={[styles.icon, iconStyles]}
+                    />
+                </View>
+                <Text style={[
+                    styles.title,
+                    { color: dark ? COLORS.white : COLORS.black }
+                ]}>
+                    {title}
+                </Text>
+            </View>
         </TouchableOpacity>
     );
 }
@@ -49,16 +53,25 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         borderColor: "gray",
         borderWidth: 1,
-        flexDirection: "row",
         marginTop: 12,
+    } as ViewStyle,
+    content: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: 240,
+    } as ViewStyle,
+    iconSlot: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 44,
     } as ViewStyle,
     icon: {
         height: 24,
         width: 24,
-        marginRight: 32,
     } as ImageStyle,
     title: {
         fontSize: 14,
+        flex: 1,
         fontFamily: FONT_FAMILY.semiBold,
         fontWeight: '600',
         color: COLORS.black,
